@@ -122,6 +122,19 @@ const DEFAULT_DATA = [
   { id: "hd532550-50l", series: "HD 532 - HD 550 (PA 500 A)", standard: "EN 856 4SH / PA 500 A", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 50, mfrCodes: ["5", "10", "34", "mw"], ferrule: "HF-xxx PHD550A / MPF3 2 (Typ „L“)", crimp: 73.8, tol: "± 0,2 mm", mandrel: null, d1: 80.0, lf: 100.0, skiveLength: 82.0, skiveLengthInt: 26.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1, note: "Voor fabrikant 25 gelden afwijkende persmaten (zie HD 500 fabrikant 25). Controleer altijd de actuele officiële perstabel." },
   { id: "hd532550-50v", series: "HD 532 - HD 550 (PA 500 A)", standard: "EN 856 4SH / PA 500 A", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 50, mfrCodes: ["5", "10", "34", "mw"], ferrule: "HF-xxx PHD550A (Typ „V“)", crimp: 72.0, tol: "± 0,2 mm", mandrel: null, d1: 77.4, da: 78.0, lf: 98.5, skiveLength: 72.0, skiveLengthInt: 29.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1, note: "Voor fabrikant 25 gelden afwijkende persmaten (zie HD 500 fabrikant 25). Controleer altijd de actuele officiële perstabel." },
   { id: "hd532550-50v-4rillen", series: "HD 532 - HD 550 (PA 500 A)", standard: "EN 856 4SH / PA 500 A", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 50, mfrCodes: ["5", "10", "34", "mw"], ferrule: "HF-xxx PHD550A (Typ „V“) 4 groeven", crimp: 72.7, tol: "± 0,2 mm", mandrel: null, d1: 77.4, da: 78.0, lf: 98.5, skiveLength: 85.0, skiveLengthInt: 29.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1, note: "4-groevenvariant. Voor fabrikant 25 gelden afwijkende persmaten (zie HD 500 fabrikant 25). Controleer altijd de actuele officiële perstabel." },
+
+  // RVS (VA) voorbeelddata, gebaseerd op een selectie uit de HANSA-FLEX crimp chart - VA
+  // (05.2022). Zelfde fittingfamilie als de staalvariant HD 100, maar met eigen matrijzen
+  // (...VA) en het materiaalveld "rvs", zodat de RVS-materiaalregels (langere perstijd,
+  // zie tabblad "RVS-fittingen") automatisch getoond worden bij deze combinaties.
+  { id: "hd100va-ns-06", series: "HD 100 - no skive VA", standard: "EN 853 1SN", uitvoering: "standaard", uitvoeringLabel: "geen skive", dn: 6, mfrCodes: ["5", "25", "27", "35"], ferrule: "HF-xxx PHD106VA", crimp: 16.7, tol: "± 0,1 mm", mandrel: null, d1: 20.0, lf: 34.5, material: "rvs", revDate: "2026-08", revSeq: 1 },
+  { id: "hd100va-ns-10", series: "HD 100 - no skive VA", standard: "EN 853 1SN", uitvoering: "standaard", uitvoeringLabel: "geen skive", dn: 10, mfrCodes: ["5", "25", "27", "35"], ferrule: "HF-xxx PHD110VA", crimp: 21.8, tol: "± 0,1 mm", mandrel: null, d1: 25.0, lf: 35.0, material: "rvs", revDate: "2026-08", revSeq: 1 },
+  { id: "hd100va-s-06", series: "HD 100 - skive VA", standard: "EN 853 1SN", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 6, mfrCodes: ["5", "25", "27", "35"], ferrule: "HF-xxx PHD106VA", crimp: 16.4, tol: "± 0,1 mm", mandrel: null, d1: 20.0, lf: 34.5, skiveLength: 25.0, material: "rvs", revDate: "2026-08", revSeq: 1 },
+
+  // Trapsgewijs persen (stage crimping) - voorbeeld op basis van SGB 100 (perslijst p.45).
+  // assemblyType "stage": crimp/crimp2/crimp3 zijn de opeenvolgende persdiameters; de
+  // laatste (kleinste) diameter geeft de optimale verbinding, zie tabblad "Trapsgewijs persen".
+  { id: "sgb100-stage-20", series: "SGB 100 - stage crimping", standard: "exceeds SAE100R4", uitvoering: "standaard", uitvoeringLabel: "geen skive", dn: 20, mfrCodes: ["25"], ferrule: "HF-xxx PHN220", crimp: 33.0, crimp2: 32.5, crimp3: 32.0, tol: null, mandrel: null, d1: 37.0, lf: 42.5, assemblyType: "stage", revDate: "2026-08", revSeq: 1 },
 ];
 
 // Vaste, eigen montage-/controlestappen voor combinaties met assemblyType "custom"
@@ -219,6 +232,8 @@ const I18N = {
     tabMandrel: "Test-Doorn",
     tabOnePiece: "One Piece Fitting",
     tabInterlock: "Interlock Fitting",
+    tabStageCrimp: "Trapsgewijs persen",
+    tabStainless: "RVS-fittingen",
     languageLabel: "Taal",
 
     // Filters
@@ -251,10 +266,13 @@ const I18N = {
     mfrChipPrefix: "Fabr.",
     fittingTypeV: "Type V (Vos)",
     fittingTypeL: "Type L (Largra)",
+    materialChipRvs: "RVS",
+    stageChipLabel: "Trapsgewijs",
     revShort: (revDate, seq) => `Rev. ${revDate}-R${String(seq || 1).padStart(2, "0")}`,
     btnDetails: "Details & persinstructie",
     favAriaSave: "Bewaar als favoriet",
     favAriaRemove: "Verwijder uit favorieten",
+    noteIndicatorAria: "Bevat een opmerking, zie details",
 
     // Detailweergave
     fieldNominalDiameter: "Nominale diameter",
@@ -278,6 +296,8 @@ const I18N = {
     stepSlideFerrule: "Schuif de huls volledig op de slang tot aan de aanslag en markeer of controleer de positie ten opzichte van de eindstreep.",
     stepSetDiameter: (crimp, tol) =>
       `Stel de crimp-/persdiameter in op ${crimp} mm${tol ? ` (tolerantie ${tol})` : " (vaste maat via matrijs — raadpleeg de officiële tabel voor de exacte tolerantie)"}.`,
+    stepSetDiameterStage: (diameters) =>
+      `Pers stapsgewijs: bereik eerst Ø1 = ${diameters[0]} mm${diameters.length > 2 ? `, verklein vervolgens naar Ø2 = ${diameters[1]} mm en tot slot naar Ø3 = ${diameters[2]} mm` : `, verklein vervolgens naar Ø2 = ${diameters[1]} mm`}. De laatste (kleinste) diameter geeft de optimale verbinding, zie ook het tabblad "Trapsgewijs persen".`,
     stepPress: "Pers de fitting in één beweging conform de ingestelde diameter.",
     stepVerify: "Verifieer de persmaat met minimaal 4 metingen verdeeld over de omtrek (bijvoorbeeld op 0°, 90°, 180° en 45°/135°).",
     stepVisualCheck: "Controleer visueel op knikken of scheve montage; raadpleeg bij twijfel de officiële tabel voor het uitvoeren van een druktest.",
@@ -328,6 +348,33 @@ const I18N = {
     interlockWarningText: "Een te grote opening tussen huls en slangmarkering wijst op een verkeerde montage: het interlockgedeelte van de huls grijpt dan niet goed in de spiraalwapening.",
     interlockNoteText: "Het gebruik van een voormontagemachine bevordert een correcte montage. Een veelvoorkomende storingsoorzaak bij interlockfittingen is een te lange interne skivelengte.",
 
+    // Trapsgewijs persen - naslagpagina, gebaseerd op HANSA-FLEX perslijst (staal p.45, RVS p.21):
+    // combinaties met assemblyType "stage" moeten in twee of drie stappen naar de eindmaat geperst worden.
+    stageCrimpPageTitle: "Trapsgewijs persen",
+    stageCrimpPageIntro: "Bij een aantal slang/fitting-combinaties (bijvoorbeeld SGB 100 en NY 1800, in zowel staal als RVS) mag de eindmaat niet in één keer geperst worden. Doorloop de crimpdiameters in de aangegeven volgorde; bij het bereiken van de laatste (kleinste) diameter is de verbinding optimaal.",
+    stageCrimpWhyHeading: "Waarom stapsgewijs?",
+    stageCrimpWhyText: "Bij deze combinaties is de sprong tussen de ongeperste en de uiteindelijke diameter te groot om in één beweging te persen zonder de wapening van de slang te beschadigen. Door via een of twee tussenmaten te persen wordt de vervorming geleidelijk opgebouwd.",
+    stageCrimpExampleHeading: "Voorbeeld: SGB 100, DN 20",
+    stageCrimpExampleText: "Ø1 = eerste (grootste) persdiameter, Ø2 = tussenmaat, Ø3 = eindmaat. Zie de kaart van deze combinatie voor de exacte waarden.",
+    stageCrimpApplicableHeading: "Van toepassing op",
+    stageCrimpApplicableText: "SGB 100 (staal en RVS) en NY 1800. Combinaties met dit persschema zijn herkenbaar aan het label \"Trapsgewijs\" op de kaart.",
+    stageCrimpLinkText: "Deze combinatie wordt stapsgewijs geperst.",
+    btnViewStageCrimp: "Bekijk trapsgewijze instructie",
+
+    // RVS-fittingen - naslagpagina, gebaseerd op HANSA-FLEX crimp chart VA (05.2022).
+    // Materiaalregels die gelden zodra een combinatie material "rvs" heeft.
+    stainlessPageTitle: "RVS-fittingen — materiaalregels",
+    stainlessPageIntro: "Voor RVS (VA) slang/fitting-combinaties gelden, naast de gewone persinstructie, twee extra materiaalregels. Combinaties met deze materiaalregels zijn herkenbaar aan het label \"RVS\" op de kaart.",
+    stainlessHoldTimeHeading: "Langere houdtijd in de pers",
+    stainlessHoldTimeText: "De houdtijd van RVS-fittingen in de pers moet na het bereiken van de crimpdiameter langer zijn dan bij staal (circa 5 seconden), om voldoende materiaalvervorming te garanderen.",
+    stainlessDisclaimerHeading: "Persmaten zijn standaardwaarden",
+    stainlessDisclaimerText: "Persdiameters zijn uitsluitend standaardwaarden. De boordoorsnede-inklapping (bore collapse) moet altijd gecontroleerd worden, bijvoorbeeld met de test-doorn; zie ook de interne Werknorm hoofdstuk 8.",
+    stainlessInterlockDiffHeading: "Afwijking bij interlock-montage",
+    stainlessInterlockDiffText: "Bij RVS interlock-fittingen moet, na het opschuiven van de huls tot de eerste weerstand (de \"bump\") van de interlock, deze weerstand bewust overwonnen worden. Trek de huls daarna weer iets naar voren zodat de opening met de fitting sluit, vóórdat je gaat persen.",
+    stainlessAutoNoteText: "Let op: dit is een RVS-fitting. De houdtijd in de pers moet langer zijn (ca. 5 sec.).",
+    stainlessLinkText: "Voor deze combinatie gelden de RVS-materiaalregels.",
+    btnViewStainlessInfo: "Bekijk RVS-materiaalregels",
+
     // Wijzigen (bewerken/toevoegen/verwijderen van combinaties)
     btnEdit: "Wijzigen",
     btnAddCombination: "Nieuwe combinatie",
@@ -351,6 +398,12 @@ const I18N = {
     editFieldAssemblyType: "Montagetype",
     assemblyTypeStandard: "Standaard",
     assemblyTypeInterlock: "One Piece Fitting (interlock)",
+    assemblyTypeStage: "Trapsgewijs persen",
+    editFieldMaterial: "Materiaal",
+    materialLabelStaal: "Staal",
+    materialLabelRvs: "RVS (VA)",
+    editFieldCrimp2: "Crimpdiameter Ø2 (mm, bij trapsgewijs persen)",
+    editFieldCrimp3: "Crimpdiameter Ø3 (mm, optioneel)",
     editFieldNote: "Opmerking (optioneel)",
     btnSaveEdit: "Opslaan",
     btnCancelEdit: "Annuleren",
@@ -431,6 +484,8 @@ const I18N = {
     tabMandrel: "Mandrel",
     tabOnePiece: "One Piece Fitting",
     tabInterlock: "Interlock Fitting",
+    tabStageCrimp: "Stage Crimping",
+    tabStainless: "Stainless Fittings",
     languageLabel: "Language",
 
     filterSeriesLabel: "Hose type / series",
@@ -460,10 +515,13 @@ const I18N = {
     mfrChipPrefix: "Mfr.",
     fittingTypeV: "Type V (Vos)",
     fittingTypeL: "Type L (Largra)",
+    materialChipRvs: "Stainless",
+    stageChipLabel: "Stage crimp",
     revShort: (revDate, seq) => `Rev. ${revDate}-R${String(seq || 1).padStart(2, "0")}`,
     btnDetails: "Details & press instructions",
     favAriaSave: "Save as favourite",
     favAriaRemove: "Remove from favourites",
+    noteIndicatorAria: "Contains a note, see details",
 
     fieldNominalDiameter: "Nominal diameter",
     fieldFerruleMarking: "Ferrule marking",
@@ -485,6 +543,8 @@ const I18N = {
     stepSlideFerrule: "Slide the ferrule fully onto the hose up to the stop, and mark or check its position relative to the end line.",
     stepSetDiameter: (crimp, tol) =>
       `Set the crimp diameter to ${crimp} mm${tol ? ` (tolerance ${tol})` : " (fixed size via die — consult the official table for the exact tolerance)"}.`,
+    stepSetDiameterStage: (diameters) =>
+      `Crimp in stages: first reach Ø1 = ${diameters[0]} mm${diameters.length > 2 ? `, then reduce to Ø2 = ${diameters[1]} mm, and finally to Ø3 = ${diameters[2]} mm` : `, then reduce to Ø2 = ${diameters[1]} mm`}. The last (smallest) diameter gives the optimal connection, see also the "Stage Crimping" tab.`,
     stepPress: "Crimp the fitting in a single motion according to the set diameter.",
     stepVerify: "Verify the crimped size with at least 4 measurements spread around the circumference (e.g. at 0°, 90°, 180° and 45°/135°).",
     stepVisualCheck: "Visually check for kinks or misalignment; if in doubt, consult the official table for performing a pressure test.",
@@ -535,6 +595,33 @@ const I18N = {
     interlockWarningText: "A too large gap between the ferrule and the hose mark points to a wrong assembly: the interlock area of the ferrule isn't properly seated on the spiral braid.",
     interlockNoteText: "Using a pre-assembling machine facilitates a proper assembly. A frequent failure cause of interlock fittings is a too large internal skive length.",
 
+    // Stage Crimping - reference page, based on the HANSA-FLEX swaging chart (steel p.45, VA p.21):
+    // combinations with assemblyType "stage" must be crimped to their final size in two or three steps.
+    stageCrimpPageTitle: "Stage Crimping",
+    stageCrimpPageIntro: "For a number of hose/fitting combinations (for example SGB 100 and NY 1800, in both steel and stainless), the final size must not be crimped in a single step. Work through the crimp diameters in the order shown; reaching the last (smallest) diameter gives the optimal connection.",
+    stageCrimpWhyHeading: "Why in stages?",
+    stageCrimpWhyText: "For these combinations, the difference between the uncrimped and final diameter is too large to crimp in one motion without damaging the hose reinforcement. Crimping via one or two intermediate sizes builds up the deformation gradually.",
+    stageCrimpExampleHeading: "Example: SGB 100, DN 20",
+    stageCrimpExampleText: "Ø1 = first (largest) crimp diameter, Ø2 = intermediate size, Ø3 = final size. See this combination's card for the exact values.",
+    stageCrimpApplicableHeading: "Applies to",
+    stageCrimpApplicableText: "SGB 100 (steel and stainless) and NY 1800. Combinations with this crimp schedule are marked with the \"Stage crimp\" label on the card.",
+    stageCrimpLinkText: "This combination is crimped in stages.",
+    btnViewStageCrimp: "View stage crimping instructions",
+
+    // Stainless Fittings - reference page, based on the HANSA-FLEX crimp chart VA (05.2022).
+    // Material rules that apply once a combination has material "rvs".
+    stainlessPageTitle: "Stainless Fittings — material rules",
+    stainlessPageIntro: "For stainless (VA) hose/fitting combinations, two extra material rules apply on top of the normal press instructions. Combinations with these rules are marked with the \"Stainless\" label on the card.",
+    stainlessHoldTimeHeading: "Longer hold time in the press",
+    stainlessHoldTimeText: "The hold time of stainless steel fittings in the press after reaching the crimp diameter has to be longer than for steel (approximately 5 seconds), to guarantee sufficient material deformation.",
+    stainlessDisclaimerHeading: "Swaging diameters are standard values",
+    stainlessDisclaimerText: "Swaging diameters are only standard values. The bore collapse must always be controlled, for example with the test mandrel; see also the internal works standard, chapter 8.",
+    stainlessInterlockDiffHeading: "Difference in interlock assembly",
+    stainlessInterlockDiffText: "For stainless interlock fittings, after sliding the ferrule up to the first resistance (the \"bump\") of the interlock, this resistance must deliberately be overcome. Then pull the ferrule slightly forward again to close the gap to the fitting, before crimping.",
+    stainlessAutoNoteText: "Note: this is a stainless steel fitting. The hold time in the press has to be longer (approx. 5 sec.).",
+    stainlessLinkText: "The stainless material rules apply to this combination.",
+    btnViewStainlessInfo: "View stainless material rules",
+
     // Edit (add / edit / delete combinations)
     btnEdit: "Edit",
     btnAddCombination: "New combination",
@@ -558,6 +645,12 @@ const I18N = {
     editFieldAssemblyType: "Assembly type",
     assemblyTypeStandard: "Standard",
     assemblyTypeInterlock: "One Piece Fitting (interlock)",
+    assemblyTypeStage: "Stage crimping",
+    editFieldMaterial: "Material",
+    materialLabelStaal: "Steel",
+    materialLabelRvs: "Stainless (VA)",
+    editFieldCrimp2: "Crimp diameter Ø2 (mm, for stage crimping)",
+    editFieldCrimp3: "Crimp diameter Ø3 (mm, optional)",
     editFieldNote: "Note (optional)",
     btnSaveEdit: "Save",
     btnCancelEdit: "Cancel",
@@ -635,6 +728,8 @@ const I18N = {
     tabMandrel: "Test-Dorn",
     tabOnePiece: "One Piece Fitting",
     tabInterlock: "Interlock Fitting",
+    tabStageCrimp: "Stufenweise Verpressen",
+    tabStainless: "Edelstahl-Armaturen",
     languageLabel: "Sprache",
 
     filterSeriesLabel: "Schlauchtyp / Baureihe",
@@ -664,10 +759,13 @@ const I18N = {
     mfrChipPrefix: "Herst.",
     fittingTypeV: "Typ V (Vos)",
     fittingTypeL: "Typ L (Largra)",
+    materialChipRvs: "Edelstahl",
+    stageChipLabel: "Stufenweise",
     revShort: (revDate, seq) => `Rev. ${revDate}-R${String(seq || 1).padStart(2, "0")}`,
     btnDetails: "Details & Pressanleitung",
     favAriaSave: "Als Favorit speichern",
     favAriaRemove: "Aus Favoriten entfernen",
+    noteIndicatorAria: "Enthält eine Anmerkung, siehe Details",
 
     fieldNominalDiameter: "Nennweite",
     fieldFerruleMarking: "Hülsenkennzeichnung",
@@ -689,6 +787,8 @@ const I18N = {
     stepSlideFerrule: "Hülse vollständig bis zum Anschlag auf den Schlauch schieben und die Position gegenüber der Endmarkierung kennzeichnen bzw. prüfen.",
     stepSetDiameter: (crimp, tol) =>
       `Crimp-/Pressdurchmesser auf ${crimp} mm einstellen${tol ? ` (Toleranz ${tol})` : " (feste Maßeinstellung über Presswerkzeug — genaue Toleranz siehe offizielle Tabelle)"}.`,
+    stepSetDiameterStage: (diameters) =>
+      `Stufenweise verpressen: zuerst Ø1 = ${diameters[0]} mm erreichen${diameters.length > 2 ? `, dann auf Ø2 = ${diameters[1]} mm reduzieren und schließlich auf Ø3 = ${diameters[2]} mm` : `, dann auf Ø2 = ${diameters[1]} mm reduzieren`}. Der letzte (kleinste) Durchmesser ergibt die optimale Verbindung, siehe auch den Reiter "Stufenweise Verpressen".`,
     stepPress: "Die Armatur in einem Arbeitsgang gemäß eingestelltem Durchmesser verpressen.",
     stepVerify: "Presswert mit mindestens 4 über den Umfang verteilten Messungen prüfen (z. B. bei 0°, 90°, 180° und 45°/135°).",
     stepVisualCheck: "Visuell auf Knicke oder Schiefstand prüfen; bei Zweifel die offizielle Tabelle für die Durchführung einer Druckprüfung konsultieren.",
@@ -739,6 +839,33 @@ const I18N = {
     interlockWarningText: "Ein zu großer Spalt zwischen Hülse und Schlauchmarkierung deutet auf eine fehlerhafte Montage hin: der Interlock-Bereich der Hülse liegt dann nicht richtig auf dem Spiralgeflecht.",
     interlockNoteText: "Die Verwendung einer Vormontagemaschine erleichtert eine korrekte Montage. Eine häufige Fehlerursache bei Interlock-Armaturen ist eine zu große innere Skivelänge.",
 
+    // Stufenweise Verpressen - Referenzseite, basierend auf der HANSA-FLEX Presstabelle (Stahl S.45, VA S.21):
+    // Kombinationen mit assemblyType "stage" müssen in zwei oder drei Schritten auf die Endmaß verpresst werden.
+    stageCrimpPageTitle: "Stufenweise Verpressen",
+    stageCrimpPageIntro: "Bei einigen Schlauch-Armatur-Kombinationen (z. B. SGB 100 und NY 1800, sowohl in Stahl als auch in Edelstahl) darf das Endmaß nicht in einem Schritt verpresst werden. Die Crimp-Durchmesser in der angegebenen Reihenfolge durchlaufen; beim Erreichen des letzten (kleinsten) Durchmessers ist die Verbindung optimal.",
+    stageCrimpWhyHeading: "Warum stufenweise?",
+    stageCrimpWhyText: "Bei diesen Kombinationen ist der Sprung zwischen dem unverpressten und dem endgültigen Durchmesser zu groß, um ihn in einer Bewegung zu verpressen, ohne die Schlaucharmierung zu beschädigen. Durch das Verpressen über eine oder zwei Zwischenstufen wird die Verformung schrittweise aufgebaut.",
+    stageCrimpExampleHeading: "Beispiel: SGB 100, DN 20",
+    stageCrimpExampleText: "Ø1 = erster (größter) Pressdurchmesser, Ø2 = Zwischenmaß, Ø3 = Endmaß. Die genauen Werte siehe Karte dieser Kombination.",
+    stageCrimpApplicableHeading: "Gilt für",
+    stageCrimpApplicableText: "SGB 100 (Stahl und Edelstahl) und NY 1800. Kombinationen mit diesem Pressschema sind an der Kennzeichnung \"Stufenweise\" auf der Karte erkennbar.",
+    stageCrimpLinkText: "Diese Kombination wird stufenweise verpresst.",
+    btnViewStageCrimp: "Stufenweise Pressanleitung ansehen",
+
+    // Edelstahl-Armaturen - Referenzseite, basierend auf der HANSA-FLEX crimp chart VA (05.2022).
+    // Materialregeln, die gelten, sobald eine Kombination material "rvs" hat.
+    stainlessPageTitle: "Edelstahl-Armaturen — Materialregeln",
+    stainlessPageIntro: "Für Edelstahl (VA) Schlauch-Armatur-Kombinationen gelten, zusätzlich zur normalen Pressanleitung, zwei weitere Materialregeln. Kombinationen mit diesen Regeln sind an der Kennzeichnung \"Edelstahl\" auf der Karte erkennbar.",
+    stainlessHoldTimeHeading: "Längere Haltezeit in der Presse",
+    stainlessHoldTimeText: "Die Haltezeit von Edelstahl-Armaturen in der Presse muss nach Erreichen des Crimp-Durchmessers länger sein als bei Stahl (ca. 5 Sekunden), um eine ausreichende Materialverformung zu gewährleisten.",
+    stainlessDisclaimerHeading: "Pressmaße sind Standardwerte",
+    stainlessDisclaimerText: "Pressdurchmesser sind ausschließlich Standardwerte. Der Bohrungskollaps muss immer kontrolliert werden, z. B. mit dem Test-Dorn; siehe auch die interne Werknorm Kapitel 8.",
+    stainlessInterlockDiffHeading: "Abweichung bei der Interlock-Montage",
+    stainlessInterlockDiffText: "Bei Edelstahl-Interlock-Armaturen muss nach dem Aufschieben der Hülse bis zum ersten Widerstand (dem \"Bump\") des Interlocks dieser Widerstand bewusst überwunden werden. Danach die Hülse wieder etwas nach vorne ziehen, um den Spalt zur Armatur zu schließen, bevor verpresst wird.",
+    stainlessAutoNoteText: "Achtung: dies ist eine Edelstahl-Armatur. Die Haltezeit in der Presse muss länger sein (ca. 5 Sek.).",
+    stainlessLinkText: "Für diese Kombination gelten die Edelstahl-Materialregeln.",
+    btnViewStainlessInfo: "Edelstahl-Materialregeln ansehen",
+
     // Wijzigen (Kombinationen bearbeiten / hinzufügen / löschen)
     btnEdit: "Bearbeiten",
     btnAddCombination: "Neue Kombination",
@@ -762,6 +889,12 @@ const I18N = {
     editFieldAssemblyType: "Montageart",
     assemblyTypeStandard: "Standard",
     assemblyTypeInterlock: "One Piece Fitting (Interlock)",
+    assemblyTypeStage: "Stufenweise Verpressen",
+    editFieldMaterial: "Material",
+    materialLabelStaal: "Stahl",
+    materialLabelRvs: "Edelstahl (VA)",
+    editFieldCrimp2: "Crimp-Durchmesser Ø2 (mm, bei stufenweisem Verpressen)",
+    editFieldCrimp3: "Crimp-Durchmesser Ø3 (mm, optional)",
     editFieldNote: "Anmerkung (optional)",
     btnSaveEdit: "Speichern",
     btnCancelEdit: "Abbrechen",
@@ -836,6 +969,12 @@ function itemNote(item, lang) {
   const translated = NOTE_TRANSLATIONS[item.id];
   if (translated && translated[lang]) return translated[lang];
   return item.note;
+}
+
+// Taalonafhankelijke check of een combinatie een opmerking heeft (voor het
+// waarschuwingsicoontje op de resultaatkaart, dat niet van de actieve taal afhangt).
+function hasNote(item) {
+  return !!(item.note || NOTE_TRANSLATIONS[item.id]);
 }
 
 // Voor interlock-combinaties met een Typ "V" (Vos) / Typ "L" (Largra) huls in de
@@ -929,7 +1068,16 @@ function normalizeRow(raw, index, t) {
   const da = daRaw !== undefined && daRaw !== "" && !Number.isNaN(Number(daRaw)) ? Number(daRaw) : undefined;
 
   const assemblyTypeRaw = (raw.assemblyType || "").toString().trim().toLowerCase();
-  const assemblyType = assemblyTypeRaw === "interlock" || assemblyTypeRaw === "custom" ? assemblyTypeRaw : "standard";
+  const assemblyType = ["interlock", "custom", "stage"].includes(assemblyTypeRaw) ? assemblyTypeRaw : "standard";
+
+  const materialRaw = (raw.material || "").toString().trim().toLowerCase();
+  const material = materialRaw === "rvs" ? "rvs" : undefined;
+
+  const crimp2Raw = raw.crimp2;
+  const crimp2 = crimp2Raw !== undefined && crimp2Raw !== "" && !Number.isNaN(Number(crimp2Raw)) ? Number(crimp2Raw) : undefined;
+
+  const crimp3Raw = raw.crimp3;
+  const crimp3 = crimp3Raw !== undefined && crimp3Raw !== "" && !Number.isNaN(Number(crimp3Raw)) ? Number(crimp3Raw) : undefined;
 
   const idRaw = (raw.id || "").toString().trim();
   const id = idRaw || `${slugify(series) || "combi"}-dn${raw.dn || index}-${slugify(ferrule) || index}`;
@@ -954,6 +1102,9 @@ function normalizeRow(raw, index, t) {
   if (skiveLength) row.skiveLength = skiveLength;
   if (skiveLengthInt) row.skiveLengthInt = skiveLengthInt;
   if (da) row.da = da;
+  if (material) row.material = material;
+  if (crimp2 !== undefined) row.crimp2 = crimp2;
+  if (crimp3 !== undefined) row.crimp3 = crimp3;
 
   return { row, errors };
 }
@@ -1003,10 +1154,12 @@ function readXlsxFile(file) {
 }
 
 function buildTemplateXlsx() {
-  const header = ["id", "series", "standard", "uitvoering", "dn", "mfrCodes", "ferrule", "crimp", "tol", "mandrel", "d1", "da", "lf", "skiveLength", "skiveLengthInt", "assemblyType", "note"];
+  const header = ["id", "series", "standard", "uitvoering", "dn", "mfrCodes", "ferrule", "crimp", "crimp2", "crimp3", "tol", "mandrel", "d1", "da", "lf", "skiveLength", "skiveLengthInt", "assemblyType", "material", "note"];
   const example = [
-    ["", "HD 100 - no skive - PHN 100", "EN 853 1SN", "standaard", 6, "25|27|35", "HF-xxx PHN106", 16.6, "", "B", 19.6, "", 30.2, "", "", "standard", ""],
-    ["", "HD 100 - no skive - PHN 200", "EN 853 1SN", "standaard", 20, "25|27|35|50", "HF-xxx PHN220", 31.4, "± 0,1 mm", "", 37.0, "", 42.5, "", "", "standard", ""],
+    ["", "HD 100 - no skive - PHN 100", "EN 853 1SN", "standaard", 6, "25|27|35", "HF-xxx PHN106", 16.6, "", "", "", "B", 19.6, "", 30.2, "", "", "standard", "", ""],
+    ["", "HD 100 - no skive - PHN 200", "EN 853 1SN", "standaard", 20, "25|27|35|50", "HF-xxx PHN220", 31.4, "", "", "± 0,1 mm", "", 37.0, "", 42.5, "", "", "standard", "", ""],
+    ["", "HD 100 - no skive VA", "EN 853 1SN", "standaard", 6, "5|25|27|35", "HF-xxx PHD106VA", 16.7, "", "", "± 0,1 mm", "", 20.0, "", 34.5, "", "", "standard", "rvs", ""],
+    ["", "SGB 100 - stage crimping", "exceeds SAE100R4", "standaard", 20, "25", "HF-xxx PHN220", 33.0, 32.5, 32.0, "", "", 37.0, "", 42.5, "", "", "stage", "", ""],
   ];
   const ws = XLSX.utils.aoa_to_sheet([header, ...example]);
   const wb = XLSX.utils.book_new();
@@ -1020,7 +1173,7 @@ function buildTemplateXlsx() {
 // is alleen informatief en wordt bij upload genegeerd — de revisie wordt automatisch
 // bepaald op basis van eventuele inhoudelijke wijzigingen.
 function buildDataXlsx(rows) {
-  const header = ["id", "series", "standard", "uitvoering", "dn", "mfrCodes", "ferrule", "crimp", "tol", "mandrel", "d1", "da", "lf", "skiveLength", "skiveLengthInt", "assemblyType", "note", "revision"];
+  const header = ["id", "series", "standard", "uitvoering", "dn", "mfrCodes", "ferrule", "crimp", "crimp2", "crimp3", "tol", "mandrel", "d1", "da", "lf", "skiveLength", "skiveLengthInt", "assemblyType", "material", "note", "revision"];
   const body = rows.map((r) => [
     r.id,
     r.series,
@@ -1030,6 +1183,8 @@ function buildDataXlsx(rows) {
     Array.isArray(r.mfrCodes) ? r.mfrCodes.join("|") : "",
     r.ferrule,
     r.crimp,
+    r.crimp2 != null ? r.crimp2 : "",
+    r.crimp3 != null ? r.crimp3 : "",
     r.tol || "",
     r.mandrel || "",
     r.d1,
@@ -1038,6 +1193,7 @@ function buildDataXlsx(rows) {
     r.skiveLength != null ? r.skiveLength : "",
     r.skiveLengthInt != null ? r.skiveLengthInt : "",
     r.assemblyType || "standard",
+    r.material || "",
     r.note || "",
     `Rev. ${r.revDate}-R${String(r.revSeq || 1).padStart(2, "0")}`,
   ]);
@@ -1082,7 +1238,7 @@ function bumpRevision(existingItem) {
 // niet bij: die zijn geen inhoudelijke wijziging). Gebruikt om bij een xlsx-heruploaded
 // te bepalen of een rij daadwerkelijk gewijzigd is, zodat de revisie alleen wordt
 // opgehoogd als er echt iets veranderd is.
-const DIFF_FIELDS = ["series", "standard", "uitvoering", "dn", "mfrCodes", "ferrule", "crimp", "tol", "mandrel", "d1", "da", "lf", "skiveLength", "skiveLengthInt", "assemblyType", "note"];
+const DIFF_FIELDS = ["series", "standard", "uitvoering", "dn", "mfrCodes", "ferrule", "crimp", "crimp2", "crimp3", "tol", "mandrel", "d1", "da", "lf", "skiveLength", "skiveLengthInt", "assemblyType", "material", "note"];
 
 function normalizeForCompare(row) {
   const out = {};
@@ -1102,6 +1258,13 @@ function rowsContentEqual(a, b) {
   return DIFF_FIELDS.every((f) => na[f] === nb[f]);
 }
 
+// Voor combinaties met assemblyType "stage": geeft de opeenvolgende persdiameters
+// terug (Ø1, Ø2, en optioneel Ø3) als array van strings met 1 decimaal.
+function stageCrimpDiameters(item) {
+  const values = [item.crimp, item.crimp2, item.crimp3].filter((v) => v !== undefined && v !== null);
+  return values.map((v) => v.toFixed(1));
+}
+
 function getSteps(item, t, lang) {
   if (item.assemblyType === "custom" && CUSTOM_STEPS[item.id]) {
     return CUSTOM_STEPS[item.id][lang] || CUSTOM_STEPS[item.id].nl;
@@ -1116,7 +1279,11 @@ function getSteps(item, t, lang) {
     steps.push(t.stepSkive(item.skiveLength, item.skiveLengthInt));
   }
   steps.push(t.stepSlideFerrule);
-  steps.push(t.stepSetDiameter(item.crimp.toFixed(1), item.tol));
+  if (item.assemblyType === "stage" && item.crimp2 != null) {
+    steps.push(t.stepSetDiameterStage(stageCrimpDiameters(item)));
+  } else {
+    steps.push(t.stepSetDiameter(item.crimp.toFixed(1), item.tol));
+  }
   steps.push(t.stepPress);
   steps.push(t.stepVerify);
   steps.push(t.stepVisualCheck);
@@ -1196,6 +1363,11 @@ function ResultCard({ item, isFav, onToggleFav, onOpenDetail, onEdit, t }) {
           <div className="hf-caption">{variantShortLabel(item.uitvoering, t)}</div>
         </div>
         <div className="flex-shrink-0 flex items-center gap-0.5">
+          {hasNote(item) && (
+            <span title={t.noteIndicatorAria} aria-label={t.noteIndicatorAria} className="p-1">
+              <AlertTriangle size={17} color="var(--hf-red)" />
+            </span>
+          )}
           <button
             onClick={() => onEdit(item)}
             aria-label={t.btnEdit}
@@ -1226,6 +1398,16 @@ function ResultCard({ item, isFav, onToggleFav, onOpenDetail, onEdit, t }) {
             {fittingTypeLabel(item, t)}
           </span>
         )}
+        {item.material === "rvs" && (
+          <span className="hf-chip px-2 py-0.5 rounded font-semibold" style={{ color: "var(--hf-red)", borderColor: "var(--hf-red)" }}>
+            {t.materialChipRvs}
+          </span>
+        )}
+        {item.assemblyType === "stage" && (
+          <span className="hf-chip px-2 py-0.5 rounded font-semibold">
+            {t.stageChipLabel}
+          </span>
+        )}
       </div>
 
       <div className="text-sm">
@@ -1238,9 +1420,15 @@ function ResultCard({ item, isFav, onToggleFav, onOpenDetail, onEdit, t }) {
           <div className="text-[11px]" style={{ color: "var(--hf-grey-dark)" }}>
             {t.labelCrimpO}
           </div>
-          <div className="text-2xl font-extrabold leading-none" style={{ color: "var(--hf-red)" }}>
-            {item.crimp.toFixed(1)} mm
-          </div>
+          {item.assemblyType === "stage" && item.crimp2 != null ? (
+            <div className="text-lg font-extrabold leading-tight" style={{ color: "var(--hf-red)" }}>
+              {stageCrimpDiameters(item).join(" → ")} mm
+            </div>
+          ) : (
+            <div className="text-2xl font-extrabold leading-none" style={{ color: "var(--hf-red)" }}>
+              {item.crimp.toFixed(1)} mm
+            </div>
+          )}
           <div className="hf-caption">{item.tol ? t.toleranceLabel(item.tol) : t.fixedSizeViaDie}</div>
         </div>
         {item.mandrel && (
@@ -1270,7 +1458,7 @@ function ResultCard({ item, isFav, onToggleFav, onOpenDetail, onEdit, t }) {
   );
 }
 
-function DetailModal({ item, isFav, onToggleFav, onClose, onPrint, onEdit, onOpenOnePiece, t, lang }) {
+function DetailModal({ item, isFav, onToggleFav, onClose, onPrint, onEdit, onOpenOnePiece, onOpenStageCrimp, onOpenStainlessInfo, t, lang }) {
   const steps = getSteps(item, t, lang);
   const note = itemNote(item, lang);
   return (
@@ -1309,7 +1497,9 @@ function DetailModal({ item, isFav, onToggleFav, onClose, onPrint, onEdit, onOpe
             <div>
               <div className="text-[11px]" style={{ color: "var(--hf-grey-dark)" }}>{t.labelCrimpO}</div>
               <div className="font-extrabold" style={{ color: "var(--hf-red)" }}>
-                {item.crimp.toFixed(1)} mm {item.tol ? `(${item.tol})` : ""}
+                {item.assemblyType === "stage" && item.crimp2 != null
+                  ? `${stageCrimpDiameters(item).join(" → ")} mm`
+                  : `${item.crimp.toFixed(1)} mm ${item.tol ? `(${item.tol})` : ""}`}
               </div>
             </div>
             <div>
@@ -1343,6 +1533,38 @@ function DetailModal({ item, isFav, onToggleFav, onClose, onPrint, onEdit, onOpe
                 {t.onePieceLinkText} <span style={{ color: "var(--hf-red)", fontWeight: 600 }}>{t.btnViewOnePiece} →</span>
               </span>
             </button>
+          )}
+
+          {item.assemblyType === "stage" && (
+            <button
+              onClick={onOpenStageCrimp}
+              className="flex items-start gap-2 p-3 rounded text-sm text-left"
+              style={{ background: "var(--hf-bg-light)", border: "1px solid var(--hf-border)" }}
+            >
+              <Link2 size={16} style={{ color: "var(--hf-red)", flexShrink: 0, marginTop: 2 }} />
+              <span>
+                {t.stageCrimpLinkText} <span style={{ color: "var(--hf-red)", fontWeight: 600 }}>{t.btnViewStageCrimp} →</span>
+              </span>
+            </button>
+          )}
+
+          {item.material === "rvs" && (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-start gap-2 p-3 rounded text-sm" style={{ background: "#fdeceb", border: "1px solid var(--hf-red)" }}>
+                <AlertTriangle size={16} style={{ color: "var(--hf-red)", flexShrink: 0, marginTop: 2 }} />
+                <span>{t.stainlessAutoNoteText}</span>
+              </div>
+              <button
+                onClick={onOpenStainlessInfo}
+                className="flex items-start gap-2 p-3 rounded text-sm text-left"
+                style={{ background: "var(--hf-bg-light)", border: "1px solid var(--hf-border)" }}
+              >
+                <Link2 size={16} style={{ color: "var(--hf-red)", flexShrink: 0, marginTop: 2 }} />
+                <span>
+                  {t.stainlessLinkText} <span style={{ color: "var(--hf-red)", fontWeight: 600 }}>{t.btnViewStainlessInfo} →</span>
+                </span>
+              </button>
+            </div>
           )}
 
           {note && (
@@ -1763,6 +1985,97 @@ function InterlockFittingPage({ t }) {
 }
 
 /* ------------------------------------------------------------------ */
+/*  Trapsgewijs persen - naslagpagina met eigen schematische SVG       */
+/*  (perslijst staal p.45 "SGB 100 - stage crimping", RVS p.21)        */
+/* ------------------------------------------------------------------ */
+function StageCrimpSvg() {
+  return (
+    <svg viewBox="0 0 320 90" width="100%" height={95} style={{ maxWidth: 340, display: "block" }}>
+      <rect x="10" y="38" width="120" height="14" rx="3" fill="#ffffff" stroke="#34393b" strokeWidth="1.5" />
+      <rect x="130" y="10" width="70" height="70" rx="6" fill="none" stroke="#d1dce3" strokeWidth="2" strokeDasharray="3 2" />
+      <rect x="140" y="18" width="60" height="54" rx="5" fill="none" stroke="#999999" strokeWidth="2" strokeDasharray="3 2" />
+      <rect x="150" y="26" width="50" height="38" rx="4" fill="#ecf1f4" stroke="#d7102d" strokeWidth="2" />
+      <text x="230" y="20" fontSize="9" fill="#666666">Ø1</text>
+      <text x="230" y="45" fontSize="9" fill="#666666">Ø2</text>
+      <text x="230" y="68" fontSize="9" fill="#d7102d" fontWeight="700">Ø3 (eindmaat)</text>
+      <text x="30" y="34" fontSize="9" fill="#666666">HANSA-FLEX</text>
+    </svg>
+  );
+}
+
+function StageCrimpPage({ t, exampleItem }) {
+  const diameters = exampleItem ? stageCrimpDiameters(exampleItem) : null;
+  return (
+    <div className="flex flex-col gap-4 max-w-3xl">
+      <p className="text-sm">{t.stageCrimpPageIntro}</p>
+      <div className="hf-card p-3">
+        <StageCrimpSvg />
+      </div>
+      <div>
+        <div className="hf-subhead mb-1">{t.stageCrimpWhyHeading}</div>
+        <p className="text-sm">{t.stageCrimpWhyText}</p>
+      </div>
+      <div>
+        <div className="hf-subhead mb-1">{t.stageCrimpExampleHeading}</div>
+        <p className="text-sm">{t.stageCrimpExampleText}</p>
+        {diameters && (
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
+            {diameters.map((d, i) => (
+              <React.Fragment key={i}>
+                {i > 0 && <ChevronRight size={16} style={{ color: "#999999" }} />}
+                <span
+                  className="rounded px-2.5 py-1 text-sm font-bold"
+                  style={{
+                    background: i === diameters.length - 1 ? "var(--hf-red)" : "var(--hf-bg-light)",
+                    color: i === diameters.length - 1 ? "#ffffff" : "var(--hf-darkgrey)",
+                    border: "1px solid var(--hf-border)",
+                  }}
+                >
+                  Ø{i + 1} {d} mm
+                </span>
+              </React.Fragment>
+            ))}
+          </div>
+        )}
+      </div>
+      <div>
+        <div className="hf-subhead mb-1">{t.stageCrimpApplicableHeading}</div>
+        <p className="text-sm">{t.stageCrimpApplicableText}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  RVS-fittingen - naslagpagina met materiaalregels (crimp chart VA)  */
+/* ------------------------------------------------------------------ */
+function StainlessPage({ t }) {
+  return (
+    <div className="flex flex-col gap-4 max-w-3xl">
+      <p className="text-sm">{t.stainlessPageIntro}</p>
+
+      <div className="flex items-start gap-2 p-3 rounded text-sm" style={{ background: "#fdeceb", border: "1px solid var(--hf-red)" }}>
+        <AlertTriangle size={16} style={{ color: "var(--hf-red)", flexShrink: 0, marginTop: 2 }} />
+        <div>
+          <div className="font-semibold">{t.stainlessHoldTimeHeading}</div>
+          <div>{t.stainlessHoldTimeText}</div>
+        </div>
+      </div>
+
+      <div>
+        <div className="hf-subhead mb-1">{t.stainlessDisclaimerHeading}</div>
+        <p className="text-sm">{t.stainlessDisclaimerText}</p>
+      </div>
+
+      <div>
+        <div className="hf-subhead mb-1">{t.stainlessInterlockDiffHeading}</div>
+        <p className="text-sm">{t.stainlessInterlockDiffText}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Wijzigen: combinatie toevoegen / bewerken / verwijderen            */
 /* ------------------------------------------------------------------ */
 function MfrCodeEditor({ codes, onChange, placeholder }) {
@@ -1807,6 +2120,8 @@ function EditModal({ item, isNew, onClose, onSave, onDelete, saving, t }) {
     ...item,
     dn: item.dn ?? "",
     crimp: item.crimp ?? "",
+    crimp2: item.crimp2 ?? "",
+    crimp3: item.crimp3 ?? "",
     d1: item.d1 ?? "",
     lf: item.lf ?? "",
     da: item.da ?? "",
@@ -1816,6 +2131,7 @@ function EditModal({ item, isNew, onClose, onSave, onDelete, saving, t }) {
     skiveLengthInt: item.skiveLengthInt ?? "",
     note: item.note ?? "",
     assemblyType: item.assemblyType || "standard",
+    material: item.material || "",
   });
   const [error, setError] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -1836,6 +2152,8 @@ function EditModal({ item, isNew, onClose, onSave, onDelete, saving, t }) {
       mfrCodes: form.mfrCodes,
       ferrule: form.ferrule.trim(),
       crimp: Number(form.crimp),
+      crimp2: form.crimp2 !== "" ? Number(form.crimp2) : undefined,
+      crimp3: form.crimp3 !== "" ? Number(form.crimp3) : undefined,
       tol: form.tol ? form.tol.trim() : null,
       mandrel: form.mandrel ? form.mandrel.trim() : null,
       d1: Number(form.d1),
@@ -1844,6 +2162,7 @@ function EditModal({ item, isNew, onClose, onSave, onDelete, saving, t }) {
       skiveLength: form.skiveLength !== "" ? Number(form.skiveLength) : undefined,
       skiveLengthInt: form.skiveLengthInt !== "" ? Number(form.skiveLengthInt) : undefined,
       assemblyType: form.assemblyType,
+      material: form.material === "rvs" ? "rvs" : undefined,
       note: form.note ? form.note.trim() : undefined,
     };
   }
@@ -1942,6 +2261,14 @@ function EditModal({ item, isNew, onClose, onSave, onDelete, saving, t }) {
               <input type="number" step="0.1" value={form.crimp} onChange={(e) => set("crimp", e.target.value)} className="w-full rounded p-2 text-sm" style={{ border: "1px solid var(--hf-border)" }} />
             </div>
             <div>
+              <label className="hf-subhead block mb-1">{t.editFieldCrimp2}</label>
+              <input type="number" step="0.1" value={form.crimp2} onChange={(e) => set("crimp2", e.target.value)} className="w-full rounded p-2 text-sm" style={{ border: "1px solid var(--hf-border)" }} />
+            </div>
+            <div>
+              <label className="hf-subhead block mb-1">{t.editFieldCrimp3}</label>
+              <input type="number" step="0.1" value={form.crimp3} onChange={(e) => set("crimp3", e.target.value)} className="w-full rounded p-2 text-sm" style={{ border: "1px solid var(--hf-border)" }} />
+            </div>
+            <div>
               <label className="hf-subhead block mb-1">{t.editFieldTol}</label>
               <input value={form.tol} onChange={(e) => set("tol", e.target.value)} className="w-full rounded p-2 text-sm" style={{ border: "1px solid var(--hf-border)" }} />
             </div>
@@ -1974,6 +2301,14 @@ function EditModal({ item, isNew, onClose, onSave, onDelete, saving, t }) {
               <select value={form.assemblyType} onChange={(e) => set("assemblyType", e.target.value)} className="w-full rounded p-2 text-sm" style={{ border: "1px solid var(--hf-border)" }}>
                 <option value="standard">{t.assemblyTypeStandard}</option>
                 <option value="interlock">{t.assemblyTypeInterlock}</option>
+                <option value="stage">{t.assemblyTypeStage}</option>
+              </select>
+            </div>
+            <div>
+              <label className="hf-subhead block mb-1">{t.editFieldMaterial}</label>
+              <select value={form.material} onChange={(e) => set("material", e.target.value)} className="w-full rounded p-2 text-sm" style={{ border: "1px solid var(--hf-border)" }}>
+                <option value="">{t.materialLabelStaal}</option>
+                <option value="rvs">{t.materialLabelRvs}</option>
               </select>
             </div>
           </div>
@@ -2416,6 +2751,12 @@ export default function CrimpApp() {
         <button className={`hf-tab ${activeTab === "onepiece" ? "active" : ""}`} onClick={() => { setActiveTab("onepiece"); setSelectedItem(null); }}>
           {t.tabOnePiece}
         </button>
+        <button className={`hf-tab ${activeTab === "stagecrimp" ? "active" : ""}`} onClick={() => { setActiveTab("stagecrimp"); setSelectedItem(null); }}>
+          {t.tabStageCrimp}
+        </button>
+        <button className={`hf-tab ${activeTab === "stainless" ? "active" : ""}`} onClick={() => { setActiveTab("stainless"); setSelectedItem(null); }}>
+          {t.tabStainless}
+        </button>
       </nav>
 
       <main className="screen-only px-4 py-4 max-w-6xl mx-auto">
@@ -2575,6 +2916,8 @@ export default function CrimpApp() {
         {activeTab === "testdoorn" && <TestMandrelPage t={t} />}
         {activeTab === "onepiece" && <OnePieceFittingPage t={t} />}
         {activeTab === "interlock" && <InterlockFittingPage t={t} />}
+        {activeTab === "stagecrimp" && <StageCrimpPage t={t} exampleItem={activeData.find((d) => d.assemblyType === "stage")} />}
+        {activeTab === "stainless" && <StainlessPage t={t} />}
       </main>
 
       {selectedItem && (
@@ -2586,6 +2929,8 @@ export default function CrimpApp() {
           onPrint={handlePrint}
           onEdit={openEditItem}
           onOpenOnePiece={() => { setSelectedItem(null); setActiveTab("onepiece"); }}
+          onOpenStageCrimp={() => { setSelectedItem(null); setActiveTab("stagecrimp"); }}
+          onOpenStainlessInfo={() => { setSelectedItem(null); setActiveTab("stainless"); }}
           t={t}
           lang={lang}
         />
@@ -2650,7 +2995,11 @@ export default function CrimpApp() {
                 <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.dn}</td>
                 <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.mfrCodes.join(", ")}</td>
                 <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.ferrule}</td>
-                <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.crimp.toFixed(1)} mm {item.tol || ""}</td>
+                <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>
+                  {item.assemblyType === "stage" && item.crimp2 != null
+                    ? `${stageCrimpDiameters(item).join(" → ")} mm`
+                    : `${item.crimp.toFixed(1)} mm ${item.tol || ""}`}
+                </td>
                 <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.mandrel || "—"}</td>
                 <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.d1} / {item.lf}</td>
                 <td style={{ padding: "6px", borderBottom: "1px solid var(--hf-border)" }}>{item.standard}, {t.revShort(item.revDate, item.revSeq)}</td>
