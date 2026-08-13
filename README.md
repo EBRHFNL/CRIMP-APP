@@ -1,6 +1,6 @@
-# HANSA-FLEX Crimp App: demo package
+# HANSA-FLEX Crimp Data: demo package
 
-This is a ready-to-run packaging of the Crimp App concept as a standard
+This is a ready-to-run packaging of the Crimp Data concept as a standard
 Vite + React project, so it can be uploaded to a sandbox environment or
 run locally as a working demo, without any backend.
 

@@ -219,7 +219,7 @@ const LOCALE_MAP = { nl: "nl-NL", en: "en-GB", de: "de-DE" };
 const I18N = {
   nl: {
     // Header / algemeen
-    appTitle: "Crimp App",
+    appTitle: "Crimp Data",
     appSubtitle: "Digitale perstabel — concept",
     disclaimerStrong: "Conceptdemo, voorbeelddata.",
     disclaimerRest: "Geen geldige productiespecificaties. Raadpleeg altijd de officiële HANSA-FLEX crimptabellen.",
@@ -456,7 +456,7 @@ const I18N = {
     errRevDateMissing: (row) => `Rij ${row}: 'revDate' ontbreekt.`,
 
     // Printweergave
-    printTitle: "HANSA-FLEX Crimp App — Referentiekaart",
+    printTitle: "HANSA-FLEX Crimp Data — Referentiekaart",
     printMetaLine: (label, date) => `Concept, voorbeelddata — ${label} — gegenereerd op ${date}`,
     printLabelOne: "1 combinatie",
     printLabelFavorites: "favorieten",
@@ -471,7 +471,7 @@ const I18N = {
   },
 
   en: {
-    appTitle: "Crimp App",
+    appTitle: "Crimp Data",
     appSubtitle: "Digital crimping table — concept",
     disclaimerStrong: "Concept demo, sample data.",
     disclaimerRest: "Not valid production specifications. Always consult the official HANSA-FLEX crimping tables.",
@@ -700,7 +700,7 @@ const I18N = {
     errRevMissing: (row) => `Row ${row}: 'rev' is missing.`,
     errRevDateMissing: (row) => `Row ${row}: 'revDate' is missing.`,
 
-    printTitle: "HANSA-FLEX Crimp App — Reference Card",
+    printTitle: "HANSA-FLEX Crimp Data — Reference Card",
     printMetaLine: (label, date) => `Concept, sample data — ${label} — generated on ${date}`,
     printLabelOne: "1 combination",
     printLabelFavorites: "favourites",
@@ -715,7 +715,7 @@ const I18N = {
   },
 
   de: {
-    appTitle: "Crimp App",
+    appTitle: "Crimp Data",
     appSubtitle: "Digitale Presstabelle — Konzept",
     disclaimerStrong: "Konzeptdemo, Beispieldaten.",
     disclaimerRest: "Keine gültigen Produktionsspezifikationen. Bitte immer die offiziellen HANSA-FLEX-Presstabellen konsultieren.",
@@ -944,7 +944,7 @@ const I18N = {
     errRevMissing: (row) => `Zeile ${row}: 'rev' fehlt.`,
     errRevDateMissing: (row) => `Zeile ${row}: 'revDate' fehlt.`,
 
-    printTitle: "HANSA-FLEX Crimp App — Referenzkarte",
+    printTitle: "HANSA-FLEX Crimp Data — Referenzkarte",
     printMetaLine: (label, date) => `Konzept, Beispieldaten — ${label} — erstellt am ${date}`,
     printLabelOne: "1 Kombination",
     printLabelFavorites: "Favoriten",
