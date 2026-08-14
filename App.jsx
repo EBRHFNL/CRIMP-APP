@@ -81,7 +81,7 @@ const DEFAULT_DATA = [
   { id: "hd700-32l", series: "HD 700 - HD 700 PRO (SAE 100 R15)", standard: "SAE 100 R15", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 32, mfrCodes: ["25"], ferrule: "HF-xxx PHD732 / MPF4 1.1/4 (Typ „L“)", crimp: 54.3, tol: "± 0,2 mm", mandrel: null, d1: 61.0, lf: 82.0, skiveLength: 64.0, skiveLengthInt: 21.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1 },
   { id: "hd700-32v", series: "HD 700 - HD 700 PRO (SAE 100 R15)", standard: "SAE 100 R15", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 32, mfrCodes: ["25"], ferrule: "HF-xxx PHD732 (Typ „V“)", crimp: 54.0, tol: "± 0,2 mm", mandrel: null, d1: 59.0, da: 61.0, lf: 78.0, skiveLength: 64.0, skiveLengthInt: 21.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1 },
 
-  // KP 610 - KP 625 met PA 700, en KP 632 met PA 532 A (interlock, Typ "L" = Largra / Typ "V" = Vos).
+  // KP 610 - KP 625 met PA 700, en KP 632 met PA 532 A (interlock, Typ "L" = Lagra / Typ "V" = Voss).
   // Voorbeeld op basis van perslijst p.31.
   { id: "kp610625-10v", series: "KP 610 - KP 625 (PA 700)", standard: "PA 700", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 10, mfrCodes: ["25"], ferrule: "HF-xxx PHD710 (Typ „V“)", crimp: 22.9, tol: "± 0,2 mm", mandrel: null, d1: 27.0, lf: 41.0, skiveLength: 31.0, skiveLengthInt: 11.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1 },
   { id: "kp610625-13v", series: "KP 610 - KP 625 (PA 700)", standard: "PA 700", uitvoering: "geskived", uitvoeringLabel: "geskived", dn: 13, mfrCodes: ["25"], ferrule: "HF-xxx PHD713 (Typ „V“)", crimp: 25.9, tol: "± 0,2 mm", mandrel: null, d1: 29.0, da: 30.0, lf: 47.0, skiveLength: 40.0, skiveLengthInt: 13.0, assemblyType: "interlock", revDate: "2026-08", revSeq: 1 },
@@ -264,8 +264,8 @@ const I18N = {
     toleranceLabel: (tol) => `tolerantie ${tol}`,
     labelMandrel: "Mandrel",
     mfrChipPrefix: "Fabr.",
-    fittingTypeV: "Type V (Vos)",
-    fittingTypeL: "Type L (Largra)",
+    fittingTypeV: "Type V (Voss)",
+    fittingTypeL: "Type L (Lagra)",
     materialChipRvs: "RVS",
     stageChipLabel: "Trapsgewijs",
     revShort: (revDate, seq) => `Rev. ${revDate}-R${String(seq || 1).padStart(2, "0")}`,
@@ -513,8 +513,8 @@ const I18N = {
     toleranceLabel: (tol) => `tolerance ${tol}`,
     labelMandrel: "Mandrel",
     mfrChipPrefix: "Mfr.",
-    fittingTypeV: "Type V (Vos)",
-    fittingTypeL: "Type L (Largra)",
+    fittingTypeV: "Type V (Voss)",
+    fittingTypeL: "Type L (Lagra)",
     materialChipRvs: "Stainless",
     stageChipLabel: "Stage crimp",
     revShort: (revDate, seq) => `Rev. ${revDate}-R${String(seq || 1).padStart(2, "0")}`,
@@ -757,8 +757,8 @@ const I18N = {
     toleranceLabel: (tol) => `Toleranz ${tol}`,
     labelMandrel: "Dorn",
     mfrChipPrefix: "Herst.",
-    fittingTypeV: "Typ V (Vos)",
-    fittingTypeL: "Typ L (Largra)",
+    fittingTypeV: "Typ V (Voss)",
+    fittingTypeL: "Typ L (Lagra)",
     materialChipRvs: "Edelstahl",
     stageChipLabel: "Stufenweise",
     revShort: (revDate, seq) => `Rev. ${revDate}-R${String(seq || 1).padStart(2, "0")}`,
@@ -977,7 +977,7 @@ function hasNote(item) {
   return !!(item.note || NOTE_TRANSLATIONS[item.id]);
 }
 
-// Voor interlock-combinaties met een Typ "V" (Vos) / Typ "L" (Largra) huls in de
+// Voor interlock-combinaties met een Typ "V" (Voss) / Typ "L" (Lagra) huls in de
 // hulsaanduiding: geeft het bijpassende label terug, zodat de gebruiker bij het
 // kiezen tussen resultaten direct ziet welk fitting-merk/type hoort bij welke persmaat.
 function fittingTypeLabel(item, t) {
